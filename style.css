@@ -1,0 +1,15 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+#container{
+    border: 1px green solid;
+    display: grid;
+    gap: 0;
+}
+.grid{
+    border: 0.5px black solid;
+}
