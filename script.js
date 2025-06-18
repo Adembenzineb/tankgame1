@@ -40,6 +40,12 @@ for (let i = 1 ; i <= gridnum;i++){
     firstLine.push(i);
 }
 
+//putting the right line elements in a list
+let rightline = [];
+for (let i = gridnum ;  i <= gridnum**2 ; i+=gridnum){
+    rightline.push()
+}
+
 
 //Arrows Event listener
 window.addEventListener("keydown" , (e) => {
@@ -75,7 +81,7 @@ window.addEventListener("keydown" , (e) => {
         newDiv.style.backgroundColor = tank;
     }else if (e.key == " "){
         if (lastkey == "ArrowRight"){
-            changeAllr(pos);
+            setTimeout(changeAllr(pos));
         }else if (lastkey == "ArrowLeft"){
             changeAlll(pos);
         }else if(lastkey == "ArrowUp"){
@@ -91,12 +97,22 @@ function changeAllt(pos){
     let bulletpos = pos-gridnum;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
+    let exty = 0;
+    let extw = 300;
     while (firstLine.indexOf(bulletpos) == -1) {
-        bulletpos-=gridnum;
-        oldbpos = newbpos;
-        newbpos = document.getElementById(bulletpos);
-        newbpos.style.backgroundColor = bullet;
-
+        setTimeout( () => {
+            exty += 600
+            oldbpos = newbpos;
+            newbpos = document.getElementById(bulletpos);
+            newbpos.style.backgroundColor = bullet;
+            setTimeout( () => {
+                newbpos.style.backgroundColor = remove;
+                console.log(true)
+                extw += 600
+            }, extw)
+            
+        },exty)
+        bulletpos -= gridnum;
     }
 }
 
@@ -118,14 +134,13 @@ function changeAllr(pos){
     let bulletpos = pos+1;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    while (pos % gridnum != 0) {
-        bulletpos++;
+    while (bulletpos % gridnum != 0) {
         oldbpos = newbpos;
         newbpos = document.getElementById(bulletpos);
         newbpos.style.backgroundColor = bullet; 
+        bulletpos++;
          
     }
-    console.log(bulletpos)
 }
 
 //changing all the left line
@@ -133,11 +148,11 @@ function changeAlll(pos){
     let bulletpos = pos-1;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    while ((pos -1) % gridnum != 0) {
-        bulletpos--;
+    while ((bulletpos -1) % gridnum != 0) {
         oldbpos = newbpos;
         newbpos = document.getElementById(bulletpos);
         newbpos.style.backgroundColor = bullet;
+        bulletpos--;
          
     }
 }
