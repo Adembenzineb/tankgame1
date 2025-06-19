@@ -3,7 +3,7 @@ const container = document.getElementById("container");
 const containerSize = 800;
 
 //Creating grids
-const gridnum = 17;//THE gridnum SHOULD BE iMPAIR!! 
+const gridnum = 51;//THE gridnum SHOULD BE iMPAIR!! 
 container.setAttribute("style" ,`grid-template-columns: repeat(${gridnum}, 1fr); grid-template-rows: repeat(${gridnum}, 1fr); width : ${containerSize}px; height: ${containerSize}px;`);
 const gridSize = containerSize / gridnum;
 for (let i = 1; i <= gridnum**2; i++) {
@@ -16,6 +16,7 @@ for (let i = 1; i <= gridnum**2; i++) {
 const tank = "blue" ;
 const remove = "white";
 const bullet = "yellow";
+const wall = "grey";
 
 //Setting the initial position of the tank
 const initpos = Math.round(gridnum**2 / 2); //the center grid position
@@ -45,6 +46,7 @@ let rightline = [];
 for (let i = gridnum ;  i <= gridnum**2 ; i+=gridnum){
     rightline.push()
 }
+
 
 
 //Arrows Event listener
@@ -95,25 +97,26 @@ window.addEventListener("keydown" , (e) => {
 //changing all the top line
 function changeAllt(pos){
     let bulletpos = pos-gridnum;
+    console.log(pos);
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    let exty = 0;
-    let extw = 300;
-    while (firstLine.indexOf(bulletpos) == -1) {
-        setTimeout( () => {
-            exty += 600
-            oldbpos = newbpos;
-            newbpos = document.getElementById(bulletpos);
-            newbpos.style.backgroundColor = bullet;
-            setTimeout( () => {
-                newbpos.style.backgroundColor = remove;
-                console.log(true)
-                extw += 600
-            }, extw)
-            
-        },exty)
-        bulletpos -= gridnum;
-    }
+    let ad = 50;
+    let ar = 25;
+
+    let inter = setInterval( () =>{
+        oldbpos = newbpos;
+        newbpos = document.getElementById(bulletpos);
+        newbpos.style.backgroundColor = bullet;
+        setTimeout( () =>{
+            newbpos.style.backgroundColor = remove;
+        },ar)
+        if (firstLine.indexOf(bulletpos) == -1){
+            bulletpos -= gridnum;
+        }else{
+            clearInterval(inter);
+        }
+
+    },ad)
 }
 
 //changing all the bottom line
@@ -121,12 +124,26 @@ function changeAllb(pos){
     let bulletpos = pos+gridnum;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    while (lastLine.indexOf(bulletpos) == -1) {
+
+    let ad = 50;
+    let ar = 25;
+
+    let inter = setInterval( () =>{
         oldbpos = newbpos;
         newbpos = document.getElementById(bulletpos);
         newbpos.style.backgroundColor = bullet;
-        bulletpos+=gridnum;
-    }
+        setTimeout( () =>{
+            newbpos.style.backgroundColor = remove;
+        },ar)
+        if (lastLine.indexOf(bulletpos) == -1){
+            bulletpos += gridnum;
+        }else{
+            clearInterval(inter);
+        }
+
+    },ad)
+    
+    
 }
 
 //changing all the right line
@@ -134,13 +151,23 @@ function changeAllr(pos){
     let bulletpos = pos+1;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    while (bulletpos % gridnum != 0) {
+    let ad = 50;
+    let ar = 25;
+
+    let inter = setInterval( () =>{
         oldbpos = newbpos;
         newbpos = document.getElementById(bulletpos);
-        newbpos.style.backgroundColor = bullet; 
-        bulletpos++;
-         
-    }
+        newbpos.style.backgroundColor = bullet;
+        setTimeout( () =>{
+            newbpos.style.backgroundColor = remove;
+        },ar)
+        if ((bulletpos) % gridnum != 0){
+            bulletpos ++;
+        }else{
+            clearInterval(inter);
+        }
+
+    },ad)
 }
 
 //changing all the left line
@@ -148,12 +175,25 @@ function changeAlll(pos){
     let bulletpos = pos-1;
     let newbpos = document.getElementById(bulletpos);
     let oldbpos = newbpos;
-    while ((bulletpos -1) % gridnum != 0) {
+    let ad = 50;
+    let ar = 25; 
+
+    let inter = setInterval( () =>{
         oldbpos = newbpos;
         newbpos = document.getElementById(bulletpos);
         newbpos.style.backgroundColor = bullet;
-        bulletpos--;
-         
-    }
+        setTimeout( () =>{
+            newbpos.style.backgroundColor = remove;
+        },ar)
+        if ((bulletpos-1) % gridnum != 0){
+            bulletpos --;
+        }else{
+            clearInterval(inter);
+        }
+
+    },ad)
 }
+
+
+
  
