@@ -10,6 +10,7 @@ for (let i = 1; i <= gridnum**2; i++) {
     let div = document.createElement("div");
     div.setAttribute("id",`${i}`)
     div.classList.add("grid");
+    div.textContent = i;
     container.appendChild(div);
 }
 
@@ -17,6 +18,7 @@ const tank = "blue" ;
 const remove = "white";
 const bullet = "yellow";
 const wall = "grey";
+const enemie = "red";
 
 //Setting the initial position of the tank
 const initpos = Math.round(gridnum**2 / 2); //the center grid position
@@ -51,7 +53,7 @@ for (let i = gridnum ;  i <= gridnum**2 ; i+=gridnum){
 
 //Arrows Event listener
 window.addEventListener("keydown" , (e) => {
-    if (e.key == "ArrowRight" && pos % gridnum != 0){
+    if (e.key == "ArrowRight" && pos % gridnum != 0 && walls.indexOf(pos+1) == -1){
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
         pos ++;
@@ -60,21 +62,21 @@ window.addEventListener("keydown" , (e) => {
         newDiv.style.backgroundColor = tank;
 
 
-    }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0){
+    }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0 && walls.indexOf(pos-1) == -1){
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
         pos --;
         lastkey = "ArrowLeft"
         newDiv = document.getElementById(`${pos}`);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1){
+    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1 && walls.indexOf(pos-gridnum) == -1){
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
         pos -= gridnum ;
         lastkey = "ArrowUp";
         newDiv = document.getElementById(`${pos}`);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1){
+    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1 && walls.indexOf(pos+gridnum) == -1){
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
         pos += gridnum ;
@@ -194,6 +196,25 @@ function changeAlll(pos){
     },ad)
 }
 
-
-
- 
+//Setting and positionning the walls
+const walls = [];
+wallsp();
+//This function work only on 51 grid
+function wallsp(){
+    for (let a = 2000 ; a <= 2040 ; a++){
+        let w = document.getElementById(a);
+        w.style.backgroundColor = wall;
+        walls.push(a);
+    }
+    for (let b = 2009 ; b >= 581 ; b-=gridnum  ){
+        let w = document.getElementById(b);
+        w.style.backgroundColor = wall;
+        walls.push(b);
+    }
+    for (let c = 1550 ; c <=1575 ; c++){
+        let w = document.getElementById(c);
+        w.style.backgroundColor = wall;
+        walls.push(c);
+    }
+    
+}
