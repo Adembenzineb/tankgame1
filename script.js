@@ -27,6 +27,8 @@ window.health = 3;
 setInterval( () => {
     document.getElementById("sc").innerHTML = `score = ${score}`;
     document.getElementById("hl").innerHTML = `health = ${health}`;
+
+    if (health == 0){window.open("gameover.html" , "_blank");}
     },100)
 
 
@@ -150,8 +152,9 @@ function enemiesp(){
 //Arrows Event listener
 window.addEventListener("keydown" , (e) => {
     if (e.key == "ArrowRight" && pos % gridnum != 0 && walls.indexOf(pos+1) == -1){
-
+        //checking if the player pos is not on the enemie pos
         if(enemies.indexOf(pos+1) != -1){window.health--;console.log(`health ${health}`)}
+
         //removing the previous div
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
@@ -162,7 +165,10 @@ window.addEventListener("keydown" , (e) => {
         newDiv = document.getElementById(`${pos}`);
         newDiv.style.backgroundColor = tank;
 
-    }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0 && walls.indexOf(pos-1) == -1 && enemies.indexOf(pos-1) == -1){
+    }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0 && walls.indexOf(pos-1) == -1){
+        //checking if the player pos is not on the enemie pos
+        if(enemies.indexOf(pos-1) != -1){window.health--;console.log(`health ${health}`)}
+
         //removing the previous div
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
@@ -172,7 +178,10 @@ window.addEventListener("keydown" , (e) => {
         lastkey = "ArrowLeft"
         newDiv = document.getElementById(`${pos}`);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1 && walls.indexOf(pos-gridnum) == -1  && enemies.indexOf(pos-gridnum) == -1){
+    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1 && walls.indexOf(pos-gridnum) == -1){
+        //checking if the player pos is not on the enemie pos
+        if(enemies.indexOf(pos-gridnum) != -1){window.health--;console.log(`health ${health}`)}
+
         //removing the previous div
         prevDiv = newDiv;
         prevDiv.style.backgroundColor = "white" ;
@@ -183,7 +192,9 @@ window.addEventListener("keydown" , (e) => {
         newDiv = document.getElementById(`${pos}`);
         newDiv.style.backgroundColor = tank;
         
-    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1 && walls.indexOf(pos+gridnum) == -1 && enemies.indexOf(pos+gridnum) == -1){
+    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1 && walls.indexOf(pos+gridnum) == -1 ){
+        //checking if the player pos is not on the enemie pos
+        if(enemies.indexOf(pos+gridnum) != -1){window.health--;console.log(`health ${health}`)}
 
         //removing the previous div
         prevDiv = newDiv;
