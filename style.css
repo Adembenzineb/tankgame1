@@ -13,3 +13,7 @@ body{
 .grid{
     border: 0.5px black solid;
 }
+#bar{
+    display: flex;
+    gap: 15px;
+}
