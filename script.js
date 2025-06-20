@@ -29,6 +29,7 @@ setInterval( () => {
     document.getElementById("hl").innerHTML = `health = ${health}`;
 
     if (health == 0){window.open("gameover.html" , "_blank");}
+    if (score == 7){window.open("win.html" , "_blank");}
     },100)
 
 
@@ -153,7 +154,11 @@ function enemiesp(){
 window.addEventListener("keydown" , (e) => {
     if (e.key == "ArrowRight" && pos % gridnum != 0 && walls.indexOf(pos+1) == -1){
         //checking if the player pos is not on the enemie pos
-        if(enemies.indexOf(pos+1) != -1){window.health--;console.log(`health ${health}`)}
+        if(enemies.indexOf(pos+1) != -1){
+            window.health--;
+            console.log(`health ${health}`);
+            enemies.splice(enemies.indexOf(pos+1),1);
+        }
 
         //removing the previous div
         prevDiv = newDiv;
@@ -167,7 +172,7 @@ window.addEventListener("keydown" , (e) => {
 
     }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0 && walls.indexOf(pos-1) == -1){
         //checking if the player pos is not on the enemie pos
-        if(enemies.indexOf(pos-1) != -1){window.health--;console.log(`health ${health}`)}
+        if(enemies.indexOf(pos-1) != -1){window.health--;console.log(`health ${health}`);enemies.splice(enemies.indexOf(pos-1),1);}
 
         //removing the previous div
         prevDiv = newDiv;
@@ -180,7 +185,7 @@ window.addEventListener("keydown" , (e) => {
         newDiv.style.backgroundColor = tank;
     }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1 && walls.indexOf(pos-gridnum) == -1){
         //checking if the player pos is not on the enemie pos
-        if(enemies.indexOf(pos-gridnum) != -1){window.health--;console.log(`health ${health}`)}
+        if(enemies.indexOf(pos-gridnum) != -1){window.health--;console.log(`health ${health}`);enemies.splice(enemies.indexOf(pos-gridnum),1);}
 
         //removing the previous div
         prevDiv = newDiv;
@@ -194,10 +199,10 @@ window.addEventListener("keydown" , (e) => {
         
     }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1 && walls.indexOf(pos+gridnum) == -1 ){
         //checking if the player pos is not on the enemie pos
-        if(enemies.indexOf(pos+gridnum) != -1){window.health--;console.log(`health ${health}`)}
+        if(enemies.indexOf(pos+gridnum) != -1){window.health--;console.log(`health ${health}`);enemies.splice(enemies.indexOf(pos+gridnum),1);}
 
         //removing the previous div
-        prevDiv = newDiv;
+        prevDiv = newDiv ;
         prevDiv.style.backgroundColor = "white" ;
 
         //moving to the new position
